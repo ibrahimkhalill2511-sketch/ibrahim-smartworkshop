@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111a20">
+    <meta name="description" content="أرسل تفاصيل وصورة عطل المعدات الهندسية إلى الورشة الفنية لطلب التشخيص والصيانة.">
+    <title>الورشة الفنية لإصلاح المعدات الهندسية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            color-scheme: dark;
+            --ink: #f2f4ee;
+            --muted: #a6b1ad;
+            --surface: #182329;
+            --surface-raised: #202d33;
+            --field: #111a20;
+            --line: #34434a;
+            --accent: #f0bd4e;
+            --accent-hover: #ffd16d;
+            --teal: #72c8b2;
+            --danger: #f08a79;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--ink);
+            background: var(--field);
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .topbar {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 82px;
+            padding: 14px max(24px, calc((100vw - 1120px) / 2));
+            background: var(--surface);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            display: grid;
+            flex: 0 0 46px;
+            width: 46px;
+            height: 46px;
+            place-items: center;
+            color: var(--accent);
+            background: #2b383c;
+            border: 1px solid #45544e;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        .brand h1,
+        .brand p {
+            margin: 0;
+        }
+
+        .brand h1 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .brand p {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .contacts {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 40px;
+            padding: 7px 12px;
+            color: var(--ink);
+            background: #111a20;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            font-size: 12px;
+            text-decoration: none;
+            transition: border-color 160ms ease, background 160ms ease;
+        }
+
+        .contact-link:hover {
+            background: var(--surface-raised);
+            border-color: #66766f;
+        }
+
+        .contact-link.whatsapp i {
+            color: var(--teal);
+        }
+
+        .contact-link.email i {
+            color: var(--accent);
+        }
+
+        main {
+            width: min(1120px, calc(100% - 40px));
+            margin: 30px auto 56px;
+        }
+
+        .workshop-scene {
+            position: relative;
+            display: flex;
+            min-height: 212px;
+            align-items: flex-end;
+            overflow: hidden;
+            padding: 26px 30px;
+            background: #253238;
+            border: 1px solid var(--line);
+            border-radius: 7px 7px 0 0;
+            isolation: isolate;
+        }
+
+        .workshop-scene::before,
+        .workshop-scene::after {
+            position: absolute;
+            z-index: -1;
+            inset: 0;
+            content: '';
+        }
+
+        .workshop-scene::before {
+            background: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1800&q=85') center 48% / cover no-repeat;
+            opacity: 0.48;
+        }
+
+        .workshop-scene::after {
+            background: linear-gradient(0deg, rgba(13, 21, 25, 0.96), rgba(13, 21, 25, 0.12) 100%);
+        }
+
+        .scene-copy {
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 9px;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .scene-copy h2 {
+            margin: 0 0 4px;
+            font-size: clamp(21px, 3vw, 29px);
+            font-weight: 700;
+        }
+
+        .scene-copy p {
+            max-width: 650px;
+            margin: 0;
+            color: #d0d8d3;
+            font-size: 13px;
+        }
+
+        .request-panel {
+            padding: 28px 30px 30px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-top: 0;
+            border-radius: 0 0 7px 7px;
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .panel-heading h3 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .required-note {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px 20px;
+        }
+
+        .form-group {
+            min-width: 0;
+        }
+
+        .form-group.wide {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #d8dfda;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .form-group label i {
+            margin-inline-end: 5px;
+            color: var(--accent);
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            color: var(--ink);
+            background: var(--field);
+            border: 1px solid #45555b;
+            border-radius: 4px;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        textarea {
+            min-height: 105px;
+            resize: vertical;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #7d8b8d;
+        }
+
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        button:focus-visible,
+        a:focus-visible,
+        .upload-box:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .upload-box {
+            position: relative;
+            display: grid;
+            min-height: 130px;
+            place-items: center;
+            padding: 18px;
+            text-align: center;
+            background: var(--field);
+            border: 1px dashed #64736e;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border-color 160ms ease, background 160ms ease;
+        }
+
+        .upload-box:hover,
+        .upload-box.is-dragging {
+            background: #19252a;
+            border-color: var(--accent);
+        }
+
+        .upload-box input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            clip-path: inset(50%);
+        }
+
+        .upload-icon {
+            margin-bottom: 6px;
+            color: var(--accent);
+            font-size: 25px;
+        }
+
+        .upload-title {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .upload-hint {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .preview-row {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            padding: 8px;
+            background: var(--field);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+        }
+
+        .preview-row.is-visible {
+            display: flex;
+        }
+
+        .preview-image {
+            width: 58px;
+            height: 48px;
+            flex: 0 0 58px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .preview-name {
+            overflow: hidden;
+            flex: 1;
+            color: #dce4df;
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .remove-image {
+            display: grid;
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            place-items: center;
+            color: var(--danger);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-error {
+            min-height: 20px;
+            margin: 6px 0 0;
+            color: var(--danger);
+            font-size: 11px;
+        }
+
+        .privacy-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 16px 0;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .privacy-note i {
+            margin-top: 5px;
+            color: var(--teal);
+        }
+
+        .submit-button {
+            display: flex;
+            width: 100%;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 11px 16px;
+            color: #192126;
+            background: var(--accent);
+            border: 0;
+            border-radius: 4px;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 160ms ease, transform 160ms ease;
+        }
+
+        .submit-button:hover {
+            background: var(--accent-hover);
+        }
+
+        .submit-button:active {
+            transform: translateY(1px);
+        }
+
+        .status-message {
+            min-height: 22px;
+            margin: 8px 0 0;
+            color: var(--teal);
+            font-size: 11px;
+        }
+
+        .service-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 24px;
+            padding: 18px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .service-item > i {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            place-items: center;
+            color: var(--teal);
+            background: #213435;
+            border-radius: 4px;
+        }
+
+        .service-item h4,
+        .service-item p {
+            margin: 0;
+        }
+
+        .service-item h4 {
+            font-size: 12px;
+        }
+
+        .service-item p {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        footer {
+            padding: 18px 20px;
+            color: var(--muted);
+            background: #141f24;
+            border-top: 1px solid var(--line);
+            text-align: center;
+            font-size: 11px;
+        }
+
+        @media (max-width: 680px) {
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+                padding: 14px 20px;
+            }
+
+            .contacts {
+                width: 100%;
+            }
+
+            .contact-link {
+                flex: 1;
+                font-size: 11px;
+            }
+
+            main {
+                width: calc(100% - 28px);
+                margin-top: 18px;
+            }
+
+            .workshop-scene {
+                min-height: 190px;
+                padding: 20px;
+            }
+
+            .request-panel {
+                padding: 21px 18px 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 13px;
+            }
+
+            .form-group.wide {
+                grid-column: auto;
+            }
+
+            .service-strip {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="#main" aria-label="الورشة الفنية، الصفحة الرئيسية">
+            <span class="brand-mark" aria-hidden="true"><i class="fa-solid fa-wrench"></i></span>
+            <span>
+                <h1>الورشة الفنية لإصلاح المعدات الهندسية</h1>
+                <p>Technical Workshop for Engineering Equipment Repair</p>
+            </span>
+        </a>
+        <nav class="contacts" aria-label="التواصل مع الورشة">
+            <a class="contact-link whatsapp" href="https://wa.me/201555463724" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                <span dir="ltr">01555463724</span>
+            </a>
+            <a class="contact-link email" href="mailto:ikhalill343@gmail.com">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                <span>البريد الإلكتروني</span>
+            </a>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section class="workshop-scene" aria-labelledby="page-title">
+            <div class="scene-copy">
+                <span class="eyebrow"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> استقبال طلبات الصيانة</span>
+                <h2 id="page-title">خلّينا نعرف عطل معدتك</h2>
+                <p>أرسل بيانات المعدة ووصف المشكلة وصورة واضحة للجزء المتضرر، وسنتواصل معك لمتابعة طلب التشخيص وقطع الغيار.</p>
+            </div>
+        </section>
+
+        <section class="request-panel" aria-labelledby="form-title">
+            <div class="panel-heading">
+                <h3 id="form-title">بيانات طلب التشخيص</h3>
+                <span class="required-note">الحقول التي تحمل * مطلوبة</span>
+            </div>
+
+            <form id="diagnosticForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="equipmentType"><i class="fa-solid fa-truck" aria-hidden="true"></i> نوع المعدة *</label>
+                        <select id="equipmentType" name="equipmentType" required>
+                            <option value="" selected disabled>اختر نوع المعدة</option>
+                            <option>حفار</option>
+                            <option>لودر</option>
+                            <option>رافعة</option>
+                            <option>مولد كهربائي</option>
+                            <option>معدات أخرى</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="model"><i class="fa-solid fa-tag" aria-hidden="true"></i> الماركة أو الموديل</label>
+                        <input id="model" name="model" type="text" placeholder="مثال: Caterpillar 320D">
+                    </div>
+
+                    <div class="form-group wide">
+                        <label for="issue"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> وصف العطل *</label>
+                        <textarea id="issue" name="issue" placeholder="متى بدأ العطل؟ وما العلامات أو الأصوات التي لاحظتها؟" required></textarea>
+                    </div>
+
+                    <div class="form-group wide">
+                        <label for="fileInput"><i class="fa-solid fa-camera" aria-hidden="true"></i> صورة المعدة أو الجزء التالف</label>
+                        <label class="upload-box" id="uploadBox" for="fileInput" tabindex="0">
+                            <input id="fileInput" name="image" type="file" accept="image/*" capture="environment" aria-describedby="uploadHint uploadError">
+                            <span>
+                                <i class="upload-icon fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+                                <span class="upload-title">اضغط لاختيار صورة أو اسحبها إلى هنا</span>
+                                <span class="upload-hint" id="uploadHint">JPG أو PNG أو WEBP، بحد أقصى 10 ميجابايت</span>
+                            </span>
+                        </label>
+                        <div class="preview-row" id="previewRow">
+                            <img class="preview-image" id="previewImage" alt="معاينة الصورة المختارة">
+                            <span class="preview-name" id="previewName"></span>
+                            <button class="remove-image" id="removeImage" type="button" aria-label="إزالة الصورة" title="إزالة الصورة">
+                                <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <p class="form-error" id="uploadError" role="alert"></p>
+                    </div>
+                </div>
+
+                <p class="privacy-note">
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                    <span>سيتم فتح محادثة واتساب برسالة جاهزة. أرفق الصورة في المحادثة يدويًا؛ لا تُرسل الصور تلقائيًا من هذه الصفحة.</span>
+                </p>
+                <button class="submit-button" type="submit">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                    إرسال تفاصيل الطلب عبر واتساب
+                </button>
+                <p class="status-message" id="statusMessage" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="service-strip" aria-label="خدمات الورشة">
+            <div class="service-item">
+                <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
+                <div><h4>فحص الأعطال</h4><p>تحديد المشكلة ومتابعة خطوات الإصلاح</p></div>
+            </div>
+            <div class="service-item">
+                <i class="fa-solid fa-gears" aria-hidden="true"></i>
+                <div><h4>قطع الغيار</h4><p>المساعدة في تحديد القطعة المناسبة</p></div>
+            </div>
+            <div class="service-item">
+                <i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>
+                <div><h4>صيانة المعدات</h4><p>دعم فني للمعدات الهندسية</p></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>الورشة الفنية لإصلاح المعدات الهندسية <span aria-hidden="true">&copy;</span> 2026</footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadBox = document.getElementById('uploadBox');
+        const uploadError = document.getElementById('uploadError');
+        const previewRow = document.getElementById('previewRow');
+        const previewImage = document.getElementById('previewImage');
+        const previewName = document.getElementById('previewName');
+        const removeImage = document.getElementById('removeImage');
+        const diagnosticForm = document.getElementById('diagnosticForm');
+        const statusMessage = document.getElementById('statusMessage');
+        const maxFileSize = 10 * 1024 * 1024;
+        let previewUrl = '';
+
+        function clearPreview() {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+                previewUrl = '';
+            }
+            fileInput.value = '';
+            previewImage.removeAttribute('src');
+            previewName.textContent = '';
+            previewRow.classList.remove('is-visible');
+        }
+
+        function displayFile(file) {
+            uploadError.textContent = '';
+            statusMessage.textContent = '';
+
+            if (!file) {
+                clearPreview();
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                clearPreview();
+                uploadError.textContent = 'يرجى اختيار ملف صورة صالح.';
+                return;
+            }
+
+            if (file.size > maxFileSize) {
+                clearPreview();
+                uploadError.textContent = 'حجم الصورة أكبر من 10 ميجابايت.';
+                return;
+            }
+
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+            previewUrl = URL.createObjectURL(file);
+            previewImage.src = previewUrl;
+            previewName.textContent = file.name;
+            previewRow.classList.add('is-visible');
+        }
+
+        fileInput.addEventListener('change', () => displayFile(fileInput.files[0]));
+        removeImage.addEventListener('click', clearPreview);
+
+        uploadBox.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                fileInput.click();
+            }
+        });
+
+        for (const eventName of ['dragenter', 'dragover']) {
+            uploadBox.addEventListener(eventName, (event) => {
+                event.preventDefault();
+                uploadBox.classList.add('is-dragging');
+            });
+        }
+
+        for (const eventName of ['dragleave', 'drop']) {
+            uploadBox.addEventListener(eventName, (event) => {
+                event.preventDefault();
+                uploadBox.classList.remove('is-dragging');
+            });
+        }
+
+        uploadBox.addEventListener('drop', (event) => {
+            const [file] = event.dataTransfer.files;
+            if (!file) return;
+            const transfer = new DataTransfer();
+            transfer.items.add(file);
+            fileInput.files = transfer.files;
+            displayFile(file);
+        });
+
+        diagnosticForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!diagnosticForm.reportValidity()) return;
+
+            const formData = new FormData(diagnosticForm);
+            const message = [
+                'طلب تشخيص معدة هندسية',
+                `نوع المعدة: ${formData.get('equipmentType')}`,
+                `الماركة أو الموديل: ${formData.get('model') || 'غير محدد'}`,
+                `وصف العطل: ${formData.get('issue')}`,
+                ...(fileInput.files.length ? ['سأرفق صورة العطل في هذه المحادثة.'] : [])
+            ].join('\n');
+            const whatsappUrl = `https://wa.me/201555463724?text=${encodeURIComponent(message)}`;
+            const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+            if (whatsappWindow) {
+                statusMessage.textContent = fileInput.files.length
+                    ? 'أُعدّت الرسالة. أرفق الصورة المختارة بعد فتح واتساب.'
+                    : 'أُعدّت الرسالة وفتحت واتساب لإرسال الطلب.';
+            } else {
+                statusMessage.textContent = 'تعذر فتح واتساب تلقائيًا. استخدم زر التواصل أعلى الصفحة لإرسال طلبك.';
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+        });
+    </script>
+</body>
+</html>
